@@ -1,34 +1,33 @@
-﻿using lab_1;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Text.Json.Serialization;
 
-namespace lab_1 { 
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+namespace lab_1
+{
     public class CEnemyTemplate
     {
-        //Свойства класса — доступны для чтения снаружи,
-        //изменяются только изнутри класса (через конструктор)
+        [JsonInclude]
         public string Name { get; private set; }
+
+        [JsonInclude]
         public string IconName { get; private set; }
+
+        [JsonInclude]
         public int BaseLife { get; private set; }
+
+        [JsonInclude]
         public double LifeModifier { get; private set; }
+
+        [JsonInclude]
         public int BaseGold { get; private set; }
+
+        [JsonInclude]
         public double GoldModifier { get; private set; }
+
+        [JsonInclude]
         public double SpawnChance { get; private set; }
-        //Конструктор класса
+
         public CEnemyTemplate(string name, string iconName, int baseLife,
-        double lifeModifier, int baseGold,
-        double goldModifier, double spawnChance)
+                              double lifeModifier, int baseGold,
+                              double goldModifier, double spawnChance)
         {
             Name = name;
             IconName = iconName;
@@ -40,4 +39,3 @@ namespace lab_1 {
         }
     }
 }
-
