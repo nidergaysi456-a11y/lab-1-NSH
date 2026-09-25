@@ -10,7 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="img\background.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="10.0.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="img\background.jpg" />
   </ItemGroup>
 
 </Project>

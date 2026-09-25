@@ -14,27 +14,13 @@ namespace lab_1
             enemies = new List<CEnemyTemplate>();
         }
 
-        // Добавляет нового противника в список
-        public void AddEnemy(string name, string iconName, int baseLife,
-                             double lifeModifier, int baseGold,
-                             double goldModifier, double spawnChance)
+        public void AddEnemy(CEnemyTemplate enemy)
         {
-            CEnemyTemplate enemy = new CEnemyTemplate(
-                name, iconName, baseLife,
-                lifeModifier, baseGold, goldModifier, spawnChance);
-
-            enemies.Add(enemy);
+            if (enemy != null) enemies.Add(enemy);
         }
 
-        public List<string> GetListOfEnemyNames()
-        {
-            List<string> names = new List<string>();
-            foreach (CEnemyTemplate enemy in enemies)
-            {
-                names.Add(enemy.Name);
-            }
-            return names;
-        }
+        public List<CEnemyTemplate> Enemies => enemies;
+
         public CEnemyTemplate GetEnemyByName(string name)
         {
             foreach (CEnemyTemplate enemy in enemies)
@@ -44,20 +30,6 @@ namespace lab_1
             }
 
             return null;
-        }
-        public CEnemyTemplate GetEnemyByIndex(int id)
-        {
-            if (id < 0 || id >= enemies.Count)
-                return null;
-
-            return enemies[id];
-        }
-        public void DeleteEnemyByIndex(int id)
-        {
-            if (id < 0 || id >= enemies.Count)
-                return;
-
-            enemies.RemoveAt(id);
         }
         public void DeleteEnemyByName(string name)
         {
@@ -76,24 +48,9 @@ namespace lab_1
         public void LoadFromJson(string path)
         {
             enemies.Clear();
-            string jsonFromFile = File.ReadAllText(path);
-
-            using JsonDocument doc = JsonDocument.Parse(jsonFromFile);
-
-            foreach (JsonElement element in doc.RootElement.EnumerateArray())
-            {
-                string name = element.GetProperty("Name").GetString();
-                string iconName = element.GetProperty("IconName").GetString();
-                int baseLife = element.GetProperty("BaseLife").GetInt32();
-                double lifeModifier = element.GetProperty("LifeModifier").GetDouble();
-                int baseGold = element.GetProperty("BaseGold").GetInt32();
-                double goldModifier = element.GetProperty("GoldModifier").GetDouble();
-                double spawnChance = element.GetProperty("SpawnChance").GetDouble();
-
-                enemies.Add(new CEnemyTemplate(
-                    name, iconName, baseLife,
-                    lifeModifier, baseGold, goldModifier, spawnChance));
-            }
+            string json = File.ReadAllText(path);
+            var loaded = JsonSerializer.Deserialize<List<CEnemyTemplate>>(json);
+            if (loaded != null) enemies.AddRange(loaded);
         }
     }
 }
